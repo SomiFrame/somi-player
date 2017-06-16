@@ -1,0 +1,356 @@
+@main-color: #41b883;
+@buffered-color: #fff;
+@slider-bar-color: #687f75;
+
+.somi-player-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    top: 0;
+    left: 0;
+    font-size: inherit;
+    button {
+        font-size: inherit;
+    }
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    button:focus {
+        outline: 0;
+    }
+    button {
+        display: inline-block;
+        background-color: transparent;
+        border: none;
+    }
+    video {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .somi-player-display {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        overflow: hidden;
+        &:focus {
+            outline: none;
+        }
+        .somi-menu {
+            position: absolute;
+            height: auto;
+            width: auto;
+            background-color: #000;
+            opacity: .8;
+            z-index: 10;
+            visibility: hidden;
+            span {
+                display: block;
+                color: #fff;
+                padding: 0 1em;
+                text-align: left;
+                &:hover {
+                    background-color: @main-color;
+                }
+            }
+        }
+        .somi-event-div {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            svg {
+                width: 4em;
+                height: 4em;
+                background-color: #000;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 100%;
+                opacity: 1;
+                visibility: hidden;
+                g {
+                    fill: #fff;
+                    visibility: hidden;
+                }
+                &.show {
+                    width: 5em;
+                    height: 5em;
+                    visibility: visible;
+                    opacity: 0;
+                    transform: translate(-50%, -50%);
+                    transition: .3s;
+                }
+                &.back {
+                    g.time-back {
+                        visibility: visible;
+                    }
+                }
+                &.ahead {
+                    g.time-ahead {
+                        visibility: visible;
+                    }
+                }
+                &.play {
+                    g.video-play {
+                        visibility: visible;
+                    }
+                }
+                &.pause {
+                    g.video-pause {
+                        visibility: visible;
+                    }
+                }
+                &.up {
+                    g.volume-up {
+                        visibility: visible;
+                    }
+                }
+                &.down {
+                    g.volume-down {
+                        visibility: visible;
+                    }
+                }
+                &.loading {
+                    opacity: .7;
+                    animation: video-loading 1s ease infinite;
+                    g {
+                        visibility: visible;
+                    }
+                    @keyframes video-loading {
+                        0% {
+                            transform: translate(-50%, -50%) rotateZ(360deg);
+                        }
+                        60% {
+                            transform: translate(-50%, -50%) rotateZ(300deg);
+                        }
+                        100% {
+                            transform: translate(-50%, -50%) rotateZ(0deg);
+                        }
+                    }
+                }
+            }
+        }
+        .somi-controller-background {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            z-index: -1;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAADGCAYAAAAT+OqFAAAAdklEQVQoz42QQQ7AIAgEF/T/D+kbq/RWAlnQyyazA4aoAB4FsBSA/bFjuF1EOL7VbrIrBuusmrt4ZZORfb6ehbWdnRHEIiITaEUKa5EJqUakRSaEYBJSCY2dEstQY7AuxahwXFrvZmWl2rh4JZ07z9dLtesfNj5q0FU3A5ObbwAAAABJRU5ErkJggg==);
+            background-repeat: repeat-x;
+            width: 100%;
+            height: 6em;
+            transition: opacity .25s cubic-bezier(0.0, 0.0, 0.2, 1);
+            background-position: bottom;
+        }
+        .somi-controller {
+            position: absolute;
+            bottom: 0;
+            height: 4em;
+            left: 1em;
+            right: 1em;
+            font-size: inherit;
+            z-index: 2;
+            opacity: 1;
+            transition: all .1s;
+            &:hover {
+                bottom: 0 !important;
+                opacity: 1 !important;
+            }
+            &.somi-hide {
+                bottom: -6em;
+                opacity: 0;
+            }
+            &:after {
+                clear: both;
+                content: " "
+            }
+            /*opacity: .7;*/
+            .videoTime {
+                float: left;
+                left: 4em;
+                height: 100%;
+                width: auto;
+                color: @main-color;
+                padding: 0 1em;
+                span {
+                    height: 100%;
+                    display: inline-block;
+                    line-height: 4em;
+                    letter-spacing: .1em;
+                }
+            }
+            .somi-main-button {
+                cursor: pointer;
+                height: 100%;
+                width: 4em;
+                float: left;
+                .main-button-svg {
+                    path {
+                        fill: @main-color;
+                        visibility: visible;
+                    }
+                }
+            }
+            .somi-volume-container {
+                height: 100%;
+                width: auto;
+                display: inline-block;
+                float: left;
+                position: relative;
+                cursor: pointer;
+                padding: 0 1em;
+                .somi-volume {
+                    height: 100%;
+                    width: 4em;
+                    float: left;
+                    cursor: pointer;
+                    .icon-volume {
+                        height: 100%;
+                        width: 100%;
+                        path {
+                            transition: 1s;
+                            fill: @main-color;
+                            visibility: visible;
+                        }
+                    }
+                }
+                .somi-volume-slider-container {
+                    height: 100%;
+                    width: 0;
+                    display: inline-block;
+                    position: relative;
+                    transition: .5s;
+                    .somi-total-volume {
+                        height: .4em;
+                        width: 100%;
+                        position: absolute;
+                        top: 50%;
+                        background-color: @slider-bar-color;
+                        transform: translateY(-50%);
+                        .somi-current-volume {
+                            height: 100%;
+                            position: absolute;
+                            background-color: @main-color;
+                            left: 0;
+                            top: 0;
+                        }
+                    }
+                }
+                &:hover {
+                    .somi-volume-slider-container {
+                        width: 9em;
+                    }
+                }
+            }
+            .somi-fullScreen-button {
+                height: 100%;
+                width: 4em;
+                float: right;
+                cursor: pointer;
+                .svg-fullScreen {
+                    g {
+                        transition: .3s;
+                        transform-origin: center;
+                        path {
+                            fill: @main-color;
+                            transition: .3s;
+                        }
+                    }
+                    &.fullScreen {
+                        g {
+                            transform: rotateZ(180deg);
+                        }
+                    }
+                }
+            }
+            .somi-slider-bar {
+                width: 100%;
+                height: .4em;
+                background-color: @slider-bar-color;
+                position: absolute;
+                top: -.4em;
+                transition: all .2s;
+                cursor: pointer;
+                .somi-slider-played {
+                    background-color: @main-color;
+                    height: 100%;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    z-index: 2;
+                    transition: all .2s;
+                }
+                .somi-slider-buffered {
+                    position: absolute;
+                    height: 100%;
+                    left: 0;
+                    right: 0;
+                    background-color: @buffered-color;
+                }
+                .somi-slider-currentTime {
+                    height: 1.5em;
+                    line-height: 1.5em;
+                    width: auto;
+                    padding: 0 .5em;
+                    color: @main-color;
+                    top: -2em;
+                    background-color: #000;
+                    position: absolute;
+                    visibility: hidden;
+                    border: .1em solid @main-color;
+                    border-radius: .3em;
+                    transform: translateX(-50%);
+                }
+                .somi-slider-preview-box {
+                    position: absolute;
+                    width: 10em;
+                    height: 6em;
+                    background-color: #000;
+                    border: .1em @main-color solid;
+                    border-radius: .5em;
+                    top: -6.5em;
+                    visibility: hidden;
+                    transform: translateX(-50%);
+                    .somi-preview-video {
+                        height: 100%;
+                        width: 100%;
+                    }
+                }
+            }
+            .somi-slider-bar:hover {
+                height: .7em;
+                top: -.7em;
+                .somi-slider-preview-box {
+                    visibility: visible;
+                }
+                .somi-slider-played {
+                    &:after {
+                        height: 1.5em;
+                        width: 1.5em;
+                        right: -.8em;
+                        content: " ";
+                        background-color: @main-color;
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        border-radius: 100%;
+                    }
+                }
+                .somi-slider-currentTime {
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
