@@ -1,6 +1,11 @@
 class PlayerController {
-    constructor() {
-
+    constructor(video) {
+        this.video= video;
+        this.Button_PlayAndPause = null;
+        this.Button_FullScreen = null;
+        this.Button_Muted = null;
+        this.Slider_Volume = null;
+        this.Slider_Propress = null;
     }
 
     static getDomString() {
@@ -29,9 +34,9 @@ class PlayerController {
                             </div>
                         </div>
                         <div class="videoTime">
-                            <span class="videoCurrentTime"></span>
+                            <span class="videoCurrentTime">00</span>
                             <span class="">/</span>
-                            <span class="videoTotalTime"></span>
+                            <span class="videoTotalTime">00</span>
                         </div>
                         <button class="somi-fullScreen-button">
                             <svg class="svg-fullScreen" height="100%" version="1.1" viewBox="0 0 36 36" width="100%">
@@ -55,6 +60,55 @@ class PlayerController {
                         </button>
                     </div>
                 </div>`
+    }
+    BindDomObject(){
+        this.Button_PlayAndPause = document.querySelector('.somi-main-button');
+        this.Button_FullScreen = document.querySelector('.somi-fullScreen-button');
+        this.Button_Muted = document.querySelector('.somi-volume');
+        this.Slider_Volume = document.querySelector('.somi-volume-slider-container');
+        this.Slider_Propress = document.querySelector('.somi-slider-bar');
+    }
+    registerEvent(){
+        this.Button_PlayAndPause.addEventListener('click',this.PlayAndPause.bind(this));
+        this.Button_FullScreen.addEventListener('click',this.fullScreen.bind(this));
+        this.Button_Muted.addEventListener('click',this.Muted.bind(this));
+    }
+    fullScreen() {
+        let el = document.querySelector(".somi-player-container");
+        let fullscreenEnabled = document.fullscreenEnabled ||
+                document.webkitFullscreenEnabled ||
+                document.mozFullScreenEnabled ||
+                document.msFullscreenEnabled;
+        let rfs = el.requestFullscreen || el.webkitRequestFullscreen ||
+                el.mozRequestFullScreen || el.msRequestFullscreen;
+        let efs = document.exitFullscreen || document.webkitExitFullscreen ||
+                document.mozCancelFullScreen || document.msExitFullscreen;
+        if (fullscreenEnabled) {
+            if(document.fullscreenElement ||
+                    document.webkitFullscreenElement ||
+                    document.mozFullScreenElement ||
+                    document.msFullscreenElement) {
+                efs.call(document);
+            }
+            else {
+                rfs.call(el);
+            }
+        }
+    }
+    Muted(){
+        this.video.muted = !this.video.muted;
+    }
+    PlayAndPause(){
+        if(this.video.paused){
+            this.video.play();
+            console.log('video has start play')
+        } else {
+            this.video.pause();
+            console.log('video has pause')
+        }
+    }
+    Muted(){
+        this.video.muted = !this.video.muted;
     }
 }
 
